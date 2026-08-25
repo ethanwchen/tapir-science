@@ -7,9 +7,11 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  equivalentTime, estimateLthr, estimateMaxHr, formatDuration, formatRange,
-  hrZones, parseDuration, racePredictions, trainingPaces, vdotFrom20MinTt,
-  vdotFromPerformance, zoneOfHr,
+  carbsToCarry, equivalentTime, estimateLthr, estimateMaxHr, fitCriticalSpeed,
+  fluidGuidance, formatDuration, formatRange, fuelTargets, hrZones,
+  maxSafeWeeklyLoad, parseDuration, racePredictions, runLoad, trainingPaces,
+  vdotFrom20MinTt, vdotFromCriticalSpeed, vdotFromPerformance, workloadRatio,
+  workloadVerdict, zoneOfHr,
 } from '../src/index.js';
 
 describe('README examples', () => {
@@ -53,6 +55,47 @@ describe('README examples', () => {
       { zone: 'Z5', name: 'VO2max', minBpm: 170, maxBpm: 190 },
     ]);
     expect(zoneOfHr(170, 168)).toBe('Z4');
+  });
+
+  it('gives the load and workload figures quoted', () => {
+    expect(Math.round(runLoad(10_000, 45 * 60, 50))).toBe(67);
+
+    const daily = [...Array<number>(21).fill(50), ...Array<number>(7).fill(65)];
+    const ratio = workloadRatio(daily);
+    expect(ratio.acute).toBe(65);
+    expect(ratio.chronic).toBe(53.75);
+    expect(ratio.ratio.toFixed(3)).toBe('1.209');
+    expect(workloadVerdict(ratio.ratio)).toBe('safe');
+    expect(Math.round(maxSafeWeeklyLoad(daily))).toBe(556);
+  });
+
+  it('gives the critical-speed fit quoted', () => {
+    const fit = fitCriticalSpeed([
+      { distanceM: 1500, durationS: 300 },
+      { distanceM: 3000, durationS: 660 },
+      { distanceM: 5000, durationS: 1180 },
+      { distanceM: 9000, durationS: 2280 },
+    ])!;
+    expect(fit.cs.toFixed(3)).toBe('3.766');
+    expect(fit.dPrime.toFixed(1)).toBe('463.2');
+    expect(fit.r2.toFixed(4)).toBe('0.9993');
+    expect(fit.pointsUsed).toBe(4);
+    expect(vdotFromCriticalSpeed(fit.cs).toFixed(1)).toBe('47.6');
+  });
+
+  it('gives the fuelling figures quoted', () => {
+    expect(fuelTargets([{ durationS: 170 * 60 }], 70)).toMatchObject({
+      dayType: 'long_big',
+      dailyCarbsPerKg: [8, 10],
+      dailyCarbsG: [560, 700],
+      preSessionG: 175,
+      preSessionHoursBefore: [3, 4],
+      duringGPerHour: [60, 90],
+    });
+    expect(carbsToCarry(4 * 3600)!.grams).toBe(300);
+    expect(fluidGuidance(2 * 3600, 26)).toBe(
+      'Drink to thirst, roughly 500-800ml per hour with 300-600mg of sodium per litre.',
+    );
   });
 
   it('reads the field test and the age fallbacks as quoted', () => {

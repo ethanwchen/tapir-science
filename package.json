@@ -1,16 +1,43 @@
 {
-  "name": "tapir-vdot",
+  "name": "tapir-science",
   "version": "0.1.0",
-  "description": "Daniels' VDOT running model: race prediction, equivalent performances, training paces, and heart-rate zones.",
+  "description": "Endurance training science as plain functions: VDOT race prediction, training paces, heart-rate zones, training load and ACWR, critical speed, and carbohydrate targets.",
   "license": "MIT",
   "author": "Ethan Chen",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
-  "files": ["dist", "README.md", "LICENSE"],
-  "keywords": ["running", "vdot", "daniels", "training", "pace", "heart-rate", "marathon", "endurance"],
-  "repository": { "type": "git", "url": "git+https://github.com/ethanwchen/tapir-vdot.git" },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "running",
+    "vdot",
+    "daniels",
+    "training",
+    "pace",
+    "heart-rate",
+    "marathon",
+    "endurance",
+    "acwr",
+    "training-load",
+    "critical-speed",
+    "sports-nutrition",
+    "cycling",
+    "triathlon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethanwchen/tapir-science.git"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
