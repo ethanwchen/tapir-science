@@ -1,0 +1,23 @@
+{
+  "name": "tapir-vdot",
+  "version": "0.1.0",
+  "description": "Daniels' VDOT running model: race prediction, equivalent performances, training paces, and heart-rate zones.",
+  "license": "MIT",
+  "author": "Ethan Chen",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": ["running", "vdot", "daniels", "training", "pace", "heart-rate", "marathon", "endurance"],
+  "repository": { "type": "git", "url": "git+https://github.com/ethanwchen/tapir-vdot.git" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
