@@ -11,3 +11,4 @@ export * from './load.js';
 export * from './criticalspeed.js';
 export * from './fueling.js';
 export * from './format.js';
+export * from './units.js';
